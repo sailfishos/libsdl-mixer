@@ -1,7 +1,7 @@
 Summary: Simple DirectMedia Layer - Sample Mixer Library
 Name: SDL2_mixer
-Version: 2.0.0
-Release: 5
+Version: 2.0.4
+Release: 1
 Source: http://www.libsdl.org/projects/%{name}/release/%{name}-%{version}.tar.gz
 URL: http://www.libsdl.org/projects/SDL_mixer/
 License: zlib
@@ -15,7 +15,7 @@ BuildRequires: pkgconfig(flac)
 Due to popular demand, here is a simple multi-channel audio mixer.
 It supports 4 channels of 16 bit stereo audio, plus a single channel
 of music, mixed by the popular MikMod MOD, Timidity MIDI, Ogg Vorbis,
-Tremor, SMPEG MP3, and libmad MP3 libraries.
+Tremor, libmpg123 and libmad MP3 libraries.
 
 %package devel
 Summary: Simple DirectMedia Layer - Sampler Mixer Library (Development)
@@ -26,10 +26,10 @@ Requires: %{name}
 Due to popular demand, here is a simple multi-channel audio mixer.
 It supports 4 channels of 16 bit stereo audio, plus a single channel
 of music, mixed by the popular MikMod MOD, Timidity MIDI, Ogg Vorbis,
-Tremor, SMPEG MP3, and libmad MP3 libraries.
+Tremor, libmpg123 and libmad MP3 libraries.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}/%{name}
 
 %build
 %configure

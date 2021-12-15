@@ -2,10 +2,9 @@ Summary: Simple DirectMedia Layer - Sample Mixer Library
 Name: SDL2_mixer
 Version: 2.0.4
 Release: 1
-Source: http://www.libsdl.org/projects/%{name}/release/%{name}-%{version}.tar.gz
+Source: %{name}-%{version}.tar.gz
 URL: http://www.libsdl.org/projects/SDL_mixer/
 License: zlib
-Group: Applications/Multimedia
 BuildRequires: pkgconfig(sdl2)
 BuildRequires: pkgconfig(ogg)
 BuildRequires: pkgconfig(vorbisfile)
@@ -20,7 +19,6 @@ Tremor, libmpg123 and libmad MP3 libraries.
 
 %package devel
 Summary: Simple DirectMedia Layer - Sampler Mixer Library (Development)
-Group: Development/Libraries
 Requires: %{name}
 
 %description devel
@@ -30,11 +28,11 @@ of music, mixed by the popular MikMod MOD, Timidity MIDI, Ogg Vorbis,
 Tremor, libmpg123 and libmad MP3 libraries.
 
 %prep
-%setup -q -n %{name}-%{version}/%{name}
+%autosetup -p1 -n %{name}-%{version}/%{name}
 
 %build
 %configure
-make
+%make_build
 
 %install
 %make_install
@@ -47,13 +45,12 @@ make
 
 %files
 %defattr(-,root,root)
-%doc README.txt CHANGES.txt COPYING.txt
+%license COPYING.txt
 %{_libdir}/lib*.so.*
 
 %files devel
 %defattr(-,root,root)
-%doc README.txt CHANGES.txt COPYING.txt
+%doc README.txt CHANGES.txt
 %{_libdir}/lib*.so
 %{_includedir}/*/*.h
 %{_libdir}/pkgconfig/*
-

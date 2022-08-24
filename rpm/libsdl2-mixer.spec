@@ -1,14 +1,16 @@
 Summary: Simple DirectMedia Layer - Sample Mixer Library
 Name: SDL2_mixer
-Version: 2.0.4
+Version: 2.6.2
 Release: 1
 Source: %{name}-%{version}.tar.gz
-URL: http://www.libsdl.org/projects/SDL_mixer/
+URL: https://github.com/libsdl-org/SDL_mixer
 License: zlib
+BuildRequires: cmake
 BuildRequires: pkgconfig(sdl2)
 BuildRequires: pkgconfig(ogg)
 BuildRequires: pkgconfig(vorbisfile)
 BuildRequires: pkgconfig(flac)
+BuildRequires: pkgconfig(libmpg123)
 
 %description
 Due to popular demand, here is a simple multi-channel audio mixer.
@@ -30,11 +32,20 @@ Tremor, libmpg123 and libmad MP3 libraries.
 %autosetup -p1 -n %{name}-%{version}/%{name}
 
 %build
-%configure
+mkdir -p build
+pushd build
+%cmake .. \
+  -DSDL2MIXER_MIDI=OFF \
+  -DSDL2MIXER_MOD=OFF \
+  -DSDL2MIXER_OPUS=OFF
 %make_build
+popd
 
 %install
+pushd build
 %make_install
+rm -f %{buildroot}%{_datadir}/licenses/%{name}/LICENSE.txt
+popd
 
 %post
 /sbin/ldconfig
@@ -44,7 +55,7 @@ Tremor, libmpg123 and libmad MP3 libraries.
 
 %files
 %defattr(-,root,root)
-%license COPYING.txt
+%license LICENSE.txt
 %{_libdir}/lib*.so.*
 
 %files devel
@@ -52,4 +63,5 @@ Tremor, libmpg123 and libmad MP3 libraries.
 %doc README.txt CHANGES.txt
 %{_libdir}/lib*.so
 %{_includedir}/*/*.h
+%{_libdir}/cmake/%{name}/*.cmake
 %{_libdir}/pkgconfig/*

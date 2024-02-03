@@ -1,6 +1,8 @@
+%undefine __cmake_in_source_build
+
 Summary: Simple DirectMedia Layer - Sample Mixer Library
 Name: SDL2_mixer
-Version: 2.6.3
+Version: 2.8.0
 Release: 1
 Source: %{name}-%{version}.tar.gz
 URL: https://github.com/libsdl-org/SDL_mixer
@@ -32,26 +34,19 @@ Tremor, libmpg123 and libmad MP3 libraries.
 %autosetup -p1 -n %{name}-%{version}/%{name}
 
 %build
-mkdir -p build
-pushd build
-%cmake .. \
+%cmake \
   -DSDL2MIXER_MIDI=OFF \
   -DSDL2MIXER_MOD=OFF \
-  -DSDL2MIXER_OPUS=OFF
-%make_build
-popd
+  -DSDL2MIXER_OPUS=OFF \
+  -DSDL2MIXER_WAVPACK=OFF
+%cmake_build
 
 %install
-pushd build
-%make_install
+%cmake_install
 rm -f %{buildroot}%{_datadir}/licenses/%{name}/LICENSE.txt
-popd
 
-%post
-/sbin/ldconfig
-
-%postun
-/sbin/ldconfig
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %defattr(-,root,root)
